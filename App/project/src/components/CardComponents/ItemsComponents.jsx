@@ -6,10 +6,12 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime}
   let [closes,setClose] = useState(false);
   let [display,setDisplay] = useState ("block");
   let [displaymodel,setDisplayModel]  = useState ("none");
+  let [newTitle,setTitle] = useState(title);
+  let [newDesc,setDesc] = useState(descriptions);
+  let [newStartT,setStartT] = useState(startDataTime);
+  let [newEndT,setEndT] = useState(endDataTime);
+  let [priority,setPirority] = useState()
   let items = {};
-
-  //redirected item value
-
   const deleteTask=()=>
   {
     items = {
@@ -46,13 +48,24 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime}
       
     }
   }
-  const save = () => {
- 
+  const done = ()=>{
+    setTimeout(()=>{
+      let list = document.createElement("h2");
+      list.textContent = `${newTitle}`;/* ${newDesc} ${newStartT}${newEndT} */
+      document.getElementById("completeTask").appendChild(list);
+    },0)
   }
+  const save = () => {
+    document.getElementsByClassName("modal")[0].style.display="none";
+    setClose(prevState=>prevState=true); 
+  }
+  document.getElementById("item")
+
   return (
     <>
      <div id='item' style={{display:`${display}`}}>
-             <span id='done' className="material-symbols-outlined">
+      <div id='controlItem'>
+      <span id='done' onClick={done}  className="material-symbols-outlined">
                 done
                 </span>
             <span className="material-symbols-outlined" onClick={editCart} id ='edit'>
@@ -60,10 +73,11 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime}
           </span>
            <span className="material-symbols-outlined" onClick={deleteTask}  id ='close'>
             cancel</span>
-            <h1>Task:{title}</h1>
-            <h2>Descriptions:{descriptions}</h2>
-            <h2>StartDataTime:{startDataTime}</h2>
-            <h2>EndDataTime:{endDataTime}</h2>
+      </div>
+            
+            <h3>{newTitle}</h3>
+            <h2>{newDesc}</h2>
+            <h2>{newEndT}</h2> 
            </div>
         {
           closes ===  true ?
@@ -73,15 +87,19 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime}
             cancel</span>
           <div>
           <h2>TitleTask</h2>
-          <textarea  placeholder='Title' id='title'  defaultValue={title}/>
+          <textarea  placeholder='Title' id='title'  defaultValue={title} onChange={(event)=>{setTitle(prevState=>prevState = event.target.value)}}/>
           <h2>Descriptions</h2>
-          <textarea placeholder='Description'  defaultValue={descriptions}/>
+          <textarea placeholder='Description'  defaultValue={descriptions} onChange={(event)=>{setDesc(prevState=>prevState = event.target.value)}}/>
           </div>
-          <div>
-          <h2>StartTask</h2>
-          <input type="datetime-local" defaultValue={startDataTime} />
+          <div id='Editblock2'>
           <h2>DateEndTask</h2>
-          <input type="datetime-local" defaultValue={endDataTime} />
+          <input type="date" defaultValue={endDataTime} onChange={(event)=>{setEndT(prevState=>prevState = event.target.value)}} />
+          <h2>Priority</h2>
+          <select>
+            <option>High</option>
+            <option>Average</option>
+            <option>Low</option>
+          </select>
           </div>
           <button onClick={save}>UpdateTask <span className="material-symbols-outlined">save</span></button>
           </div>

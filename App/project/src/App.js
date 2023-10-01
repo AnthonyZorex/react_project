@@ -19,6 +19,12 @@ function App()
   
   function new_card()
   { 
+    let Data = new Date();
+    let  Year = Data.getFullYear();
+    let Month = Data.getMonth();
+    let Day = Data.getDate();
+    setStartDataTime(startDataTime = `${Day}/${Month}/${Year}`);
+    console.log(startDataTime);
     setCounter(counter = counter + 1);
     items = {
       "id":counter,
@@ -32,6 +38,10 @@ function App()
       document.getElementById("Descriptions").value  = "";
       document.getElementById("startData").value  = "";
       document.getElementById("endData").value  = "";
+      setTitle(prevState=>prevState ="");
+      setDescriptions(prevState=>prevState ="");
+      setStartDataTime(prevState=>prevState ="");
+      setDescriptions(prevState=>prevState ="");
   }
   return (
    <main>  
@@ -47,8 +57,8 @@ function App()
       <input type='text' id='title' placeholder='Title' onChange={((event)=>setTitle(prevState => prevState = event.target.value))} />
       <h2>Descriptions</h2>
       <textarea placeholder='Description' id='Descriptions' onChange={((event)=>setDescriptions(prevState => prevState = event.target.value))} />
-      <h2>StartTask</h2>
-      <input type="date" id='startData' onChange={((event)=>setStartDataTime(prevState => prevState = event.target.value))}/>
+         <h2>StartTask</h2>
+      <input type="date" id='startData' /* onChange={(()=>setStartDataTime(prevState => prevState = Date.now()))} *//>
       <h2>EndTask</h2>
       <input type="date" id='endData' onChange={((event)=>setEndDataTime(prevState => prevState = event.target.value))} />
     <span onClick={new_card} title='New task' className="material-symbols-outlined">
@@ -56,20 +66,25 @@ add_circle
 </span>
     </div>
     <div id ='allItem'>
+      
     <h1 id ='nameBlock'>Tasks</h1>
+    <div id='card'>
       {
        arrayItems && arrayItems.map(e=>
        <ItemsComponents key={e.id} data={e} />) 
       }
-     
+      </div>
     </div>
     </div>
-    <div id='completeTask'>
-    <span  className="material-symbols-outlined">
+    
+   </div>
+   <div id='completeTask'>
+      <div>
+      <span  className="material-symbols-outlined">
     checklist_rtl
     </span>
+      </div>
     </div>
-   </div>
    </main>
    
   );

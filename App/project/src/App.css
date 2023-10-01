@@ -44,18 +44,24 @@
 }
 
 #completeTask {
-  display: flex;
+  display: block;
+  margin-top: 10px;
+  border-top-right-radius: 20px;
   min-height: 100vh;
-  margin-left: 20px;
+  margin-left: 0px;
+  margin-right: 20px;
   color: #000;
   min-width: 200px;
   background: #DAF7A6;
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
   justify-content: center;
-  z-index: 9999;
+  z-index: 0;
 }
 #completeTask span {
+  margin-top: 20px;
+}
+#completeTask h2 {
   margin-top: 20px;
 }
 
@@ -70,33 +76,36 @@
   margin-left: 40px;
   margin-top: 20px;
   margin-bottom: 20px;
-  max-width: auto;
+  width: 300px;
+  height: 300px;
   border: 4px solid #C70039;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
   border-radius: 12px;
+  background: lightcyan;
+  text-align: center;
   margin-right: 40px;
 }
-#allItem #item h1 {
+#allItem #item h3 {
   padding: 10px;
+  margin-top: 20px;
 }
 #allItem #item h2 {
+  margin-top: 20px;
   padding: 10px;
 }
 #allItem #item #close {
   position: absolute;
-  margin-left: 74%;
+  margin-left: 7%;
   cursor: pointer;
-  margin-top: -2px;
 }
 #allItem #item #edit {
   position: absolute;
-  margin-left: 72%;
+  margin-left: 5%;
   cursor: pointer;
-  margin-top: -2px;
 }
 #allItem #item #done {
   position: absolute;
-  margin-left: 70%;
+  margin-left: 3%;
   cursor: pointer;
 }
 
@@ -106,6 +115,7 @@ main {
 
 #content {
   display: flex;
+  margin-top: 10px;
   min-height: 100vh;
   max-height: auto;
   width: 100vw;
@@ -170,80 +180,24 @@ main {
     transform: translateY(0px);
   }
 }
-#allDocumentAssets {
-  text-align: center;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 50px;
+#Editblock2 {
+  justify-content: start;
+  margin-left: 20px;
 }
-#allDocumentAssets #ToolsBar {
-  width: 90vw;
+#Editblock2 input {
+  width: 150px;
+}
+#Editblock2 h2 {
+  margin-left: 10px;
+}
+#Editblock2 select {
+  border: none;
+  border-radius: 12px;
+  padding-left: 5px;
+  background: #DAF7A6;
   height: 40px;
-  margin-left: 40px;
-  border-radius: 10px;
-  display: flex;
-  background: #fff;
-}
-#allDocumentAssets #ToolsBar #font {
-  display: flex;
-  background: #C70039;
-}
-#allDocumentAssets #ToolsBar #font h4 {
-  margin: 10px;
-  cursor: pointer;
-}
-#allDocumentAssets #ToolsBar #font #fontSize {
   outline: none;
-  height: 30px;
-  width: 40px;
-  border: none;
-  margin: 5px;
-  cursor: pointer;
-}
-#allDocumentAssets #ToolsBar #font #fontStyle {
-  outline: none;
-  height: 30px;
-  width: 160px;
-  border: none;
-  margin: 5px;
-  cursor: pointer;
-}
-#allDocumentAssets #paddingSlide {
-  margin-top: 20px;
-  width: 90vw;
-}
-#allDocumentAssets #paddingSlide #slider_range_padding_doc {
-  width: 55vw;
-  margin-left: 100px;
-}
-#allDocumentAssets #paddingSlide #allrengeItem {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  gap: 8px;
-  margin-left: 100px;
-}
-
-#document {
-  min-width: 210mm;
-  max-width: 210mm; /* ширина */
-  min-height: 297mm; /* высота */
-  max-height: 297mm;
-  white-space: pre-wrap;
-  outline: none;
-  padding: 15mm 15mm 15mm 25mm; /* внутренние отступы - верх, право, низ, лево */
-  margin: 50px auto; /* выравнивание по центру */
-  box-shadow: 10px 10px 20px black; /* небольшая тень для объемности */
-  font-family: "Times New Roman"; /* нужный шрифт */
-  font-size: 14pt;
-  line-height: 1.5;
-  background: #fff;
-  margin-left: 100px;
-}
-
-.uppercase {
-  text-transform: uppercase;
+  width: 150px;
 }
 
 .modal {
@@ -327,4 +281,20 @@ main {
   100% {
     transform: translateX(0px);
   }
+}
+
+#card {
+  display: grid;
+  grid-template-columns: repeat(4, 300px);
+  grid-column-gap: 50px;
+  height: auto;
+  margin-top: 50px;
+}
+
+#controlItem {
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  background: #fff;
+  width: 300px;
+  height: 25px;
 }/*# sourceMappingURL=App.css.map */
