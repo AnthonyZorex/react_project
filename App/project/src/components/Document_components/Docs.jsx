@@ -16,7 +16,7 @@ function Docs() {
         method: 'GET'
     });
     let data = await res.json();
-
+console.log(data);
     for(let i in data.rates)
     {
       setCurrency(currency=>{return[...currency,i]});
