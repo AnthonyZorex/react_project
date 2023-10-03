@@ -21,10 +21,14 @@ function App()
   function new_card()
   { 
     let Data = new Date();
-    let  Year = Data.getFullYear();
+   /*  let  Year = Data.getFullYear();
     let Month = Data.getMonth();
     let Day = Data.getDate();
-    setStartDataTime(startDataTime = `${Day}/${Month}/${Year}`);
+    let  Seconds = Data.getFullYear();
+    let Minuts = Data.getMonth();
+    let hour = Data.getDate(); */
+    setStartDataTime(startDataTime = `${Data.getDate()}`);
+    console.log(startDataTime);
     setCounter(counter = counter + 1);
     items = {
       "id":counter,
@@ -36,7 +40,6 @@ function App()
     };
 
       setItemsArray(arrayItems=>{return[...arrayItems,items]});
-      console.log(arrayItems);
       document.getElementById("title").value = "";
       document.getElementById("Descriptions").value  = "";
       document.getElementById("endData").value  = "";
@@ -60,7 +63,15 @@ function App()
   }
 
   const EndDataValue = (event) =>{
+  /*   let endT = Date.parse(event.target.value); */
+    /* let years = Math.floor(endT / (1000 * 60 * 60 * 24 * 30 * 12));
+    let months = Math.floor(endT / (1000 * 60 * 60 * 24 * 30) % 12);
+    let days = Math.floor(endT / (1000 * 60 * 60 * 24) % 30);
+    let hours = Math.floor((endT / (1000 * 60 * 60)) % 24);
+    let  minutes = Math.floor((endT/ (1000 * 60)) % 60);
+    let seconds = Math.floor((endT / 1000) % 60); */
     setEndDataTime(prevState => prevState = event.target.value);
+    console.log(endDataTime);
   }
 
   return (
@@ -85,7 +96,7 @@ function App()
             <option>Low</option>
           </select>
       <h2>EndTask</h2>
-      <input type="date" id='endData' onChange={EndDataValue} />
+      <input type="datetime-local" id='endData' onChange={EndDataValue} />
     <span onClick={new_card} title='New task' className="material-symbols-outlined">
 add_circle
 </span>

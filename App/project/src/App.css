@@ -62,6 +62,7 @@
   margin-top: 20px;
 }
 #completeTask h2 {
+  word-break: break-all;
   margin-top: 20px;
 }
 
@@ -88,9 +89,11 @@
 #allItem #item h3 {
   padding: 10px;
   margin-top: 20px;
+  word-break: break-all;
 }
 #allItem #item h2 {
   margin-top: 20px;
+  word-break: break-all;
   padding: 10px;
 }
 #allItem #item #close {
@@ -293,10 +296,34 @@ main {
 
 #controlItem {
   border-bottom: 4px solid #000;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-  background: #fff;
-  color: #000;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  background: #273746;
+  color: #fff;
   width: 300px;
   height: 25px;
+}
+
+#DataItem {
+  border-top: 4px solid #000;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background: #273746;
+  color: #fff;
+  width: 300px;
+  display: flex;
+  height: 30px;
+}
+#DataItem span {
+  margin-left: 130px;
+  margin-top: 2px;
+  display: flex;
+}
+#DataItem h4 {
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+#contentCard {
+  height: 218px;
 }/*# sourceMappingURL=App.css.map */

@@ -1,4 +1,5 @@
 import React,{useEffect, useState} from 'react'
+import ModalComponents from './ModalComponents';
 
 function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime,priority}}) 
 {  
@@ -9,8 +10,16 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime,
   let [newTitle,setTitle] = useState(title);
   let [newDesc,setDesc] = useState(descriptions);
   let [newEndT,setEndT] = useState(endDataTime);
-   let [newpriority,setNewPirority] = useState(priority);
+  let [newpriority,setNewPirority] = useState(priority);
   let items = {};
+  let [blockState,setBlockState] = useState(false);
+  let infoblock = {};
+  let [info,setInfo] = useState(infoblock);
+ 
+
+  //Times values
+  let [timer,setTimer] = useState("");
+  let [timerValue,setTimerValue] = useState("");
   const deleteTask=()=>
   {
     items = {
@@ -19,7 +28,37 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime,
     setDeleteComponents(prevState => [...prevState,prevState.push(items.id)]);
     deletecomponents.filter((a)=>a === items.id) ? setDisplay(display="none"): setDisplay(display="block"); 
   }
- /*   */
+  useEffect(()=>{
+    setTimer(timer => (Date.parse(newEndT)-(Date.parse(startDataTime))));
+     let years = Math.floor(timer / (1000 * 60 * 60 * 24 * 30 * 12));
+     let months = Math.floor(timer / (1000 * 60 * 60 * 24 * 30) % 12);
+     let days = Math.floor(timer / (1000 * 60 * 60 * 24) % 30);
+     let hours = Math.floor((timer / (1000 * 60 * 60)) % 24);
+     let  minutes = Math.floor((timer/ (1000 * 60)) % 60);
+     let seconds = Math.floor((timer / 1000) % 60);
+     console.log(Date.parse(newEndT));
+
+     console.log( Date.parse(startDataTime));
+     setTimerValue(timerValue = `${years}/${months}/${days}\t ${hours}:${minutes}:${seconds}`);
+     /* if(years!==0)
+     setTimerValue(timerValue = `${years}/${months}/${days}\t ${hours}:${minutes}:${seconds}`);
+     if(years===0)
+     setTimerValue(timerValue = `${months}/${days}\t ${hours}:${minutes}:${seconds}`);
+     if(months===0)
+     setTimerValue(timerValue = `${days}\t ${hours}:${minutes}:${seconds}`);
+     if(days===0){
+      setTimerValue(timerValue = `${hours}:${minutes}:${seconds}`);
+     }
+     if(hours===0)
+     setTimerValue(timerValue = `${minutes}:${seconds}`);
+    if(minutes===0)
+    setTimerValue(timerValue = `${years}/${months}/${days}\t ${hours-1}:${minutes}:${seconds}`);
+    if(seconds===0){
+      setTimerValue(timerValue = `${minutes-1}:${seconds}`);
+    } */
+
+  },[timer]);
+
   const editCart = () => 
   {
       if(closes === false){
@@ -36,27 +75,33 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime,
   {
     if(closes === false)
     {
-      document.getElementsByClassName("modal")[0].style.display="none";
+     setDisplayModel(prevState=>prevState = "none");
       setClose(prevState=>prevState=true);
       
     }
     else
     {
-      document.getElementsByClassName("modal")[0].style.display="block";
+      setDisplayModel(prevState=>prevState = "block");
       setClose(prevState=>prevState=false);
       
     }
   }
   const done = ()=>{
-    setTimeout(()=>{
       let list = document.createElement("h2");
       list.textContent = `${newTitle}`;/* ${newDesc} ${newStartT}${newEndT} */
       document.getElementById("completeTask").appendChild(list);
-    },0)
+
+      items = {
+        'id':id
+      };
+
+      setDeleteComponents(prevState => [...prevState,prevState.push(items.id)]);
+      deletecomponents.filter((a)=>a === items.id) ? setDisplay(display="none"): setDisplay(display="block"); 
   }
   const save = () => {
-    document.getElementsByClassName("modal")[0].style.display="none";
+    setDisplayModel(prevState=>prevState = "none");
     setClose(prevState=>prevState=true); 
+    
   }
   const  TitleValue=(event)=>{
     setTitle(prevState=>prevState = event.target.value);
@@ -73,13 +118,29 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime,
   const EndDataValue = (event) =>{
     setEndT(prevState=>prevState = event.target.value);
   }
-
-
+  const ItemInfo = () =>{
+    setBlockState(blockState = true);
+    
+      infoblock ={
+        "state":blockState,
+        "title":newTitle,
+        "startData":startDataTime,
+        "priority":newpriority,
+        "endTask":newEndT,
+        "timer": timer,
+        "descriptions":newDesc
+      }
+      setInfo(info = infoblock);
+      console.log(info);
+  }
+/*   console.log(startDataTime);
+  console.log(newEndT);
+  console.log(timerValue); */
   return (
     <>
-     <div id='item' style={{display:`${display}`,border:`${ priority==="High"?"4px solid #C70039"
+     <div id='item' onClick={ItemInfo}  style={{display:`${display}`,border:`${ priority==="High"?"4px solid #C70039"
       :priority==="Average"?"4px solid #FFC300":priority==="Low"?"4px solid #DAF7A6" :"" }`}}>
-
+      
       <div id='controlItem'>
       <span id='done' onClick={done}  className="material-symbols-outlined">
                 done
@@ -90,11 +151,17 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime,
            <span className="material-symbols-outlined" onClick={deleteTask}  id ='close'>
             cancel</span>
       </div>
-            
-            <h3>{newTitle}</h3>
-            <hr/>
-            <h2>{newDesc}</h2>
-            <h2>{newEndT}</h2>  
+            <div id='contentCard'>
+            <h3>{newTitle}</h3> 
+          
+             <ModalComponents info={info} />
+            </div>
+            <div id='DataItem'>
+            <span className="material-symbols-outlined">
+            schedule
+            </span>
+             <h4>{timerValue}</h4> 
+            </div>
            </div>
         {
           closes ===  true ?
