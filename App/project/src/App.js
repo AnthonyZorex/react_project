@@ -114,11 +114,12 @@ add_circle
     </div>
     
    </div>
-   <div id='completeTask'>
+   <div title='Done Task' id='completeTask'>
       <div>
       <span  className="material-symbols-outlined">
     checklist_rtl
     </span>
+
       </div>
     </div>
    </main>

@@ -12,14 +12,26 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime,
   let [newEndT,setEndT] = useState(endDataTime);
   let [newpriority,setNewPirority] = useState(priority);
   let items = {};
-  let [blockState,setBlockState] = useState(false);
+  let [blockState,setBlockState] = useState(true);
   let infoblock = {};
   let [info,setInfo] = useState(infoblock);
- 
+  let Context = React.createContext();
 
   //Times values
   let [timer,setTimer] = useState("");
   let [timerValue,setTimerValue] = useState("");
+
+  //css Values
+  let [borders,setBorders] = useState(""); 
+
+  useEffect(()=>{
+    if(priority==="High")
+      setBorders((prevState)=>prevState ="4px solid #C70039");
+      if(priority==="Average")
+      setBorders((prevState)=>prevState ="4px solid #FFC300");
+      if(priority==="Low")
+    setBorders((prevState)=>prevState ="4px solid #DAF7A6"); 
+  },[priority])
   const deleteTask=()=>
   {
     items = {
@@ -36,27 +48,8 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime,
      let hours = Math.floor((timer / (1000 * 60 * 60)) % 24);
      let  minutes = Math.floor((timer/ (1000 * 60)) % 60);
      let seconds = Math.floor((timer / 1000) % 60);
-     console.log(Date.parse(newEndT));
-
-     console.log( Date.parse(startDataTime));
+  
      setTimerValue(timerValue = `${years}/${months}/${days}\t ${hours}:${minutes}:${seconds}`);
-     /* if(years!==0)
-     setTimerValue(timerValue = `${years}/${months}/${days}\t ${hours}:${minutes}:${seconds}`);
-     if(years===0)
-     setTimerValue(timerValue = `${months}/${days}\t ${hours}:${minutes}:${seconds}`);
-     if(months===0)
-     setTimerValue(timerValue = `${days}\t ${hours}:${minutes}:${seconds}`);
-     if(days===0){
-      setTimerValue(timerValue = `${hours}:${minutes}:${seconds}`);
-     }
-     if(hours===0)
-     setTimerValue(timerValue = `${minutes}:${seconds}`);
-    if(minutes===0)
-    setTimerValue(timerValue = `${years}/${months}/${days}\t ${hours-1}:${minutes}:${seconds}`);
-    if(seconds===0){
-      setTimerValue(timerValue = `${minutes-1}:${seconds}`);
-    } */
-
   },[timer]);
 
   const editCart = () => 
@@ -76,15 +69,12 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime,
     if(closes === false)
     {
      setDisplayModel(prevState=>prevState = "none");
-      setClose(prevState=>prevState=true);
-      
     }
     else
     {
       setDisplayModel(prevState=>prevState = "block");
-      setClose(prevState=>prevState=false);
-      
     }
+    setClose(prevState=>prevState=!prevState);
   }
   const done = ()=>{
       let list = document.createElement("h2");
@@ -119,27 +109,24 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime,
     setEndT(prevState=>prevState = event.target.value);
   }
   const ItemInfo = () =>{
-    setBlockState(blockState = true);
-    
-      infoblock ={
-        "state":blockState,
-        "title":newTitle,
-        "startData":startDataTime,
-        "priority":newpriority,
-        "endTask":newEndT,
-        "timer": timer,
-        "descriptions":newDesc
-      }
-      setInfo(info = infoblock);
-      console.log(info);
+    setBlockState((prevState)=>prevState=!prevState);
   }
-/*   console.log(startDataTime);
-  console.log(newEndT);
-  console.log(timerValue); */
+  useEffect(()=>{
+   const infoblock ={
+      state:blockState,
+      title:newTitle,
+      startData:startDataTime,
+      priority:newpriority,
+      endTask:newEndT,
+      timer: timer,
+      descriptions:newDesc
+    }
+    setInfo(infoblock);
+    console.log(info);
+  },[blockState])
   return (
     <>
-     <div id='item' onClick={ItemInfo}  style={{display:`${display}`,border:`${ priority==="High"?"4px solid #C70039"
-      :priority==="Average"?"4px solid #FFC300":priority==="Low"?"4px solid #DAF7A6" :"" }`}}>
+     <div id='item' style={{display:`${display}`,border:`${borders}`}}>
       
       <div id='controlItem'>
       <span id='done' onClick={done}  className="material-symbols-outlined">
@@ -150,17 +137,19 @@ function ItemsComponents({data:{id,title,descriptions,startDataTime,endDataTime,
           </span>
            <span className="material-symbols-outlined" onClick={deleteTask}  id ='close'>
             cancel</span>
-      </div>
-            <div id='contentCard'>
-            <h3>{newTitle}</h3> 
-          
-             <ModalComponents info={info} />
+            </div>
+            <div id='contentCard' >
+            <h3 onClick={ItemInfo} >{newTitle}</h3> 
+            {
+              blockState===false?<ModalComponents closeWindow={ItemInfo} info={info} />:console.log(blockState)
+            }
+             
             </div>
             <div id='DataItem'>
             <span className="material-symbols-outlined">
             schedule
             </span>
-             <h4>{timerValue}</h4> 
+             <h4>{/* timerValue */ newEndT}</h4> 
             </div>
            </div>
         {
